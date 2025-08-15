@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { getPersonaResponse } from '../api/openai';
-import { TextField, Button, Typography, Box, Avatar, IconButton, CircularProgress, Tooltip } from '@mui/material';
+import { TextField, Button, Typography, Box, Avatar, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import TypingIndicator from './TypingIndicator';
 
+// Persona details for chat header
 const personaDetails = {
     hitesh: {
         name: 'Hitesh Choudhary',
@@ -22,12 +23,15 @@ const ChatWindow = ({ personaId, onClose, fontSize = 16 }) => {
     const [loading, setLoading] = useState(false);
     const chatEndRef = useRef(null);
 
+    // Scroll to bottom when chat updates
     useEffect(() => {
         chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [chatHistory, loading]);
 
+    // Handle user input change
     const handleInputChange = (event) => setUserInput(event.target.value);
 
+    // Send user message and get AI reply
     const handleSendMessage = async () => {
         if (!userInput.trim()) return;
         const newHistory = [...chatHistory, { sender: 'user', message: userInput }];
@@ -43,6 +47,7 @@ const ChatWindow = ({ personaId, onClose, fontSize = 16 }) => {
         setLoading(false);
     };
 
+    // Allow sending message with Enter key
     const handleKeyDown = (e) => {
         if (e.key === 'Enter' && !loading) handleSendMessage();
     };
@@ -63,10 +68,10 @@ const ChatWindow = ({ personaId, onClose, fontSize = 16 }) => {
                         ? 'linear-gradient(135deg, #232526 0%, #414345 100%)'
                         : '#ece5dd',
                 position: 'relative',
-                fontSize, // <--- This will set the base font size for all children
+                fontSize, // base font size for children
             }}
         >
-            {/* Header */}
+            {/* Header with persona info */}
             <Box
                 sx={{
                     display: 'flex',
@@ -77,7 +82,7 @@ const ChatWindow = ({ personaId, onClose, fontSize = 16 }) => {
                     borderTopLeftRadius: 12,
                     borderTopRightRadius: 12,
                     minHeight: 68,
-                    fontSize, // header font size
+                    fontSize,
                 }}
             >
                 <Avatar
@@ -106,7 +111,7 @@ const ChatWindow = ({ personaId, onClose, fontSize = 16 }) => {
                     <CloseIcon />
                 </IconButton>
             </Box>
-            {/* Chat Area */}
+            {/* Chat messages area */}
             <Box
                 sx={{
                     flex: 1,
@@ -119,7 +124,7 @@ const ChatWindow = ({ personaId, onClose, fontSize = 16 }) => {
                         theme.palette.mode === 'dark'
                             ? 'linear-gradient(135deg, #232526 0%, #0f2027 100%)'
                             : 'linear-gradient(135deg, #e0eafc 0%, #a1c4fd 100%)',
-                    fontSize, // chat area font size
+                    fontSize,
                 }}
             >
                 {chatHistory.map((chat, index) => (
@@ -138,7 +143,7 @@ const ChatWindow = ({ personaId, onClose, fontSize = 16 }) => {
                             borderRadius: 2,
                             maxWidth: '75%',
                             boxShadow: 1,
-                            fontSize, // message font size
+                            fontSize,
                         }}
                     >
                         {chat.message}
@@ -168,7 +173,7 @@ const ChatWindow = ({ personaId, onClose, fontSize = 16 }) => {
                 )}
                 <div ref={chatEndRef} />
             </Box>
-            {/* Input Area */}
+            {/* Input area for typing and sending messages */}
             <Box
                 sx={{
                     display: 'flex',
@@ -194,18 +199,18 @@ const ChatWindow = ({ personaId, onClose, fontSize = 16 }) => {
                         background: (theme) => theme.palette.mode === 'dark' ? '#232526' : '#fff',
                         borderRadius: 1,
                         fontSize,
-                        color: (theme) => theme.palette.mode === 'dark' ? '#fff' : '#222', // <-- text color
+                        color: (theme) => theme.palette.mode === 'dark' ? '#fff' : '#222',
                         '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
                         '& .MuiOutlinedInput-root': { padding: 0 },
                         '& .MuiInputBase-input': {
-                            color: (theme) => theme.palette.mode === 'dark' ? '#fff' : '#222', // <-- input text color
+                            color: (theme) => theme.palette.mode === 'dark' ? '#fff' : '#222',
                         },
                         '& textarea': {
                             padding: '12px 14px',
                             fontSize,
                             lineHeight: 1.5,
                             resize: 'none',
-                            color: (theme) => theme.palette.mode === 'dark' ? '#fff' : '#222', // <-- textarea text color
+                            color: (theme) => theme.palette.mode === 'dark' ? '#fff' : '#222',
                         },
                     }}
                     InputProps={{
@@ -222,7 +227,7 @@ const ChatWindow = ({ personaId, onClose, fontSize = 16 }) => {
                         minWidth: 80,
                         fontSize,
                         background: (theme) => theme.palette.mode === 'dark' ? '#075e54' : undefined,
-                        color: (theme) => theme.palette.mode === 'dark' ? '#fff' : undefined, // <-- button text color
+                        color: (theme) => theme.palette.mode === 'dark' ? '#fff' : undefined,
                         '&:hover': {
                             background: (theme) => theme.palette.mode === 'dark' ? '#128c7e' : undefined,
                         },

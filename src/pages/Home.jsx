@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Box, Grid, Fade, Typography, IconButton, Menu, MenuItem, ToggleButtonGroup, ToggleButton } from '@mui/material';
+import { Box, Grid, Fade, Typography, IconButton, Menu, ToggleButtonGroup, ToggleButton } from '@mui/material';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 import PersonaCard from '../components/PersonaCard';
 import ChatWindow from '../components/ChatWindow';
 
+// Persona data for selection cards
 const personas = [
     {
         id: 'hitesh',
@@ -23,6 +24,7 @@ const personas = [
     },
 ];
 
+// Font size options for the app
 const FONT_SIZES = {
     small: 12,
     medium: 16,
@@ -36,10 +38,10 @@ const Home = ({ mode, setMode }) => {
 
     const handleCloseChat = () => setSelectedPersona(null);
 
-    // Theme toggle
+    // Toggle between light and dark theme
     const handleThemeToggle = () => setMode(mode === 'light' ? 'dark' : 'light');
 
-    // Font size menu
+    // Font size menu handlers
     const handleFontMenuOpen = (event) => setAnchorEl(event.currentTarget);
     const handleFontMenuClose = () => setAnchorEl(null);
     const handleFontSizeChange = (event, newSize) => {
@@ -47,7 +49,7 @@ const Home = ({ mode, setMode }) => {
         handleFontMenuClose();
     };
 
-    // Provide font size as a number for sx
+    // Convert font size key to px value
     const fontPx = FONT_SIZES[fontSize];
 
     return (
@@ -67,7 +69,7 @@ const Home = ({ mode, setMode }) => {
                 overflowX: 'hidden',
             }}
         >
-            {/* Top bar with theme and font size controls */}
+            {/* Top bar: theme and font size controls */}
             <Box
                 sx={{
                     width: '100%',
@@ -112,7 +114,7 @@ const Home = ({ mode, setMode }) => {
                 </Menu>
             </Box>
 
-            {/* Welcome and persona selection */}
+            {/* Welcome message and persona selection */}
             {!selectedPersona && (
                 <Fade in timeout={800}>
                     <div style={{ marginBottom: 40, width: '100%', textAlign: 'center', marginTop: 80 }}>
@@ -130,10 +132,10 @@ const Home = ({ mode, setMode }) => {
                                 textShadow: (theme) =>
                                     theme.palette.mode === 'dark'
                                         ? '0 2px 8px #000'
-                                        : '0 2px 8px #fff, 0 4px 16px #bdbdbd', // Add a strong white shadow for light mode
+                                        : '0 2px 8px #fff, 0 4px 16px #bdbdbd',
                                 fontSize: fontPx + 10,
                                 background: (theme) =>
-                                    theme.palette.mode === 'light' ? 'rgba(255,255,255,0.7)' : 'transparent', // subtle background for light mode
+                                    theme.palette.mode === 'light' ? 'rgba(255,255,255,0.7)' : 'transparent',
                                 borderRadius: 2,
                                 px: 2,
                                 py: 1,
@@ -160,6 +162,7 @@ const Home = ({ mode, setMode }) => {
                     </div>
                 </Fade>
             )}
+            {/* Persona cards grid */}
             {!selectedPersona && (
                 <Fade in timeout={600} unmountOnExit>
                     <Grid container spacing={4} justifyContent="center">
@@ -182,6 +185,7 @@ const Home = ({ mode, setMode }) => {
                     </Grid>
                 </Fade>
             )}
+            {/* Chat window overlay */}
             {selectedPersona && (
                 <Fade in timeout={600} unmountOnExit>
                     <Box
