@@ -66,21 +66,41 @@ const ChatWindow = ({ personaId, onClose }) => {
             }}
         >
             {/* Header */}
-            <Box sx={{
-                display: 'flex',
-                alignItems: 'center',
-                background: '#075e54',
-                color: '#fff',
-                p: 2,
-                borderTopLeftRadius: 12,
-                borderTopRightRadius: 12,
-            }}>
-                <Avatar src={persona.image} alt={persona.name} sx={{ mr: 2 }} />
-                <Typography variant="h6" sx={{ flexGrow: 1 }}>{persona.name}</Typography>
-                <Tooltip title="Online">
-                    <FiberManualRecordIcon sx={{ color: '#25d366', fontSize: 18, mr: 1 }} />
-                </Tooltip>
-                <IconButton onClick={onClose} sx={{ color: '#fff' }}>
+            <Box
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    background: '#075e54',
+                    color: '#fff',
+                    p: 1.2,
+                    borderTopLeftRadius: 12,
+                    borderTopRightRadius: 12,
+                    minHeight: 68,
+                }}
+            >
+                <Avatar
+                    src={persona.image}
+                    alt={persona.name}
+                    sx={{
+                        width: 48,
+                        height: 48,
+                        mr: 2,
+                        alignSelf: 'flex-start',
+                        mt: 0.5,
+                    }}
+                />
+                <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: 48 }}>
+                    <Typography variant="subtitle1" sx={{ fontWeight: 600, lineHeight: 1.2 }}>
+                        {persona.name}
+                    </Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 0.2 }}>
+                        <FiberManualRecordIcon sx={{ color: '#25d366', fontSize: 14, mr: 0.7 }} />
+                        <Typography variant="caption" sx={{ color: '#b2dfdb', fontWeight: 500 }}>
+                            Online
+                        </Typography>
+                    </Box>
+                </Box>
+                <IconButton onClick={onClose} sx={{ color: '#fff', ml: 1, alignSelf: 'flex-start', mt: 0.5 }}>
                     <CloseIcon />
                 </IconButton>
             </Box>
@@ -145,23 +165,42 @@ const ChatWindow = ({ personaId, onClose }) => {
                 <div ref={chatEndRef} />
             </Box>
             {/* Input Area */}
-            <Box sx={{
-                display: 'flex',
-                alignItems: 'center',
-                p: 2,
-                background: '#f7f7f7',
-                borderBottomLeftRadius: 12,
-                borderBottomRightRadius: 12,
-            }}>
+            <Box
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    p: 2,
+                    background: '#f7f7f7',
+                    borderBottomLeftRadius: 12,
+                    borderBottomRightRadius: 12,
+                }}
+            >
                 <TextField
                     variant="outlined"
                     fullWidth
+                    multiline
+                    minRows={1}
+                    maxRows={5}
                     value={userInput}
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
                     placeholder="Type a message"
                     disabled={loading}
-                    sx={{ background: '#fff', borderRadius: 2 }}
+                    sx={{
+                        background: '#fff',
+                        borderRadius: 1,
+                        '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
+                        '& .MuiOutlinedInput-root': { padding: 0 },
+                        '& textarea': {
+                            padding: '12px 14px',
+                            fontSize: 16,
+                            lineHeight: 1.5,
+                            resize: 'none',
+                        },
+                    }}
+                    InputProps={{
+                        sx: { py: 0 }
+                    }}
                 />
                 <Button
                     variant="contained"

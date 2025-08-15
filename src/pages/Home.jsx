@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Grid, Fade, Typography, Paper } from '@mui/material';
+import { Box, Grid, Fade, Typography } from '@mui/material';
 import PersonaCard from '../components/PersonaCard';
 import ChatWindow from '../components/ChatWindow';
 
@@ -43,93 +43,107 @@ const Home = ({ mode }) => {
                 overflowX: 'hidden',
             }}
         >
-            <Fade in timeout={800}>
-                <Box
-                    sx={{
-                        mb: 5,
-                        px: { xs: 2, md: 6 },
-                        py: { xs: 3, md: 5 },
-                        borderRadius: 4,
-                        boxShadow: 12,
-                        background: (theme) =>
-                            theme.palette.mode === 'dark'
-                                ? 'linear-gradient(135deg, rgba(44,62,80,0.95) 0%, rgba(52,73,94,0.95) 100%)'
-                                : 'linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(230,240,255,0.96) 100%)',
-                        maxWidth: 700,
-                        width: '100%',
-                        textAlign: 'center',
-                        backdropFilter: 'blur(2px)',
-                        border: (theme) =>
-                            theme.palette.mode === 'dark'
-                                ? '1.5px solid rgba(255,255,255,0.08)'
-                                : '1.5px solid #e0eafc',
-                        transition: 'background 0.3s',
-                    }}
-                >
-                    <Typography
-                        variant="h3"
+            {!selectedPersona && (
+                <Fade in timeout={800}>
+                    <div style={{ marginBottom: 40, width: '100%', textAlign: 'center' }}>
+                        <Typography
+                            variant="h3"
+                            sx={{
+                                fontWeight: 900,
+                                letterSpacing: 2,
+                                mb: 2,
+                                fontFamily: 'Montserrat, Poppins, sans-serif',
+                                color: (theme) =>
+                                    theme.palette.mode === 'dark'
+                                        ? '#e0eafc'
+                                        : '#4b2067',
+                                textShadow: (theme) =>
+                                    theme.palette.mode === 'dark'
+                                        ? '0 2px 8px #000'
+                                        : '0 2px 8px #bdbdbd',
+                            }}
+                        >
+                            👋 Welcome to Your AI Companion
+                        </Typography>
+                        <Typography
+                            variant="h6"
+                            sx={{
+                                color: (theme) =>
+                                    theme.palette.mode === 'dark'
+                                        ? '#b2c2e0'
+                                        : '#b2c2e0',
+                                fontWeight: 500,
+                                fontFamily: 'Poppins, Montserrat, sans-serif',
+                                mb: 1,
+                            }}
+                        >
+                            Select a persona to get insights, advice, and a dash of personality in every reply.
+                        </Typography>
+                    </div>
+                </Fade>
+            )}
+            {!selectedPersona && (
+                <Fade in timeout={600} unmountOnExit>
+                    <Grid container spacing={4} justifyContent="center">
+                        {personas.map((persona, idx) => (
+                            <Grid item key={persona.id}>
+                                <Fade in timeout={600 + idx * 200}>
+                                    <div>
+                                        <PersonaCard
+                                            id={persona.id}
+                                            name={persona.name}
+                                            description={persona.description}
+                                            image={persona.image}
+                                            onChatClick={setSelectedPersona}
+                                        />
+                                    </div>
+                                </Fade>
+                            </Grid>
+                        ))}
+                    </Grid>
+                </Fade>
+            )}
+            {selectedPersona && (
+                <Fade in timeout={600} unmountOnExit>
+                    <Box
                         sx={{
-                            fontWeight: 900,
-                            letterSpacing: 2,
-                            mb: 2,
-                            fontFamily: 'Montserrat, Poppins, sans-serif',
-                            color: (theme) =>
-                                theme.palette.mode === 'dark'
-                                    ? '#e0eafc'
-                                    : '#4b2067',
-                            textShadow: (theme) =>
-                                theme.palette.mode === 'dark'
-                                    ? '0 2px 8px #000'
-                                    : '0 2px 8px #bdbdbd',
+                            width: '100vw',
+                            height: '100vh',
+                            minHeight: '100vh',
+                            minWidth: '100vw',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            zIndex: 1200,
+                            background: mode === 'dark'
+                                ? 'linear-gradient(135deg, #141e30 0%, #243b55 100%)'
+                                : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                            borderRadius: 0,
+                            overflow: 'hidden',
+                            boxShadow: 'none',
                         }}
                     >
-                        👋 Welcome to Your AI Companion
-                    </Typography>
-                    <Typography
-                        variant="h6"
-                        sx={{
-                            color: (theme) =>
-                                theme.palette.mode === 'dark'
-                                    ? '#b2c2e0'
-                                    : '#5d3fa0',
-                            fontWeight: 500,
-                            fontFamily: 'Poppins, Montserrat, sans-serif',
-                            mb: 1,
-                        }}
-                    >
-                        Select a persona to get insights, advice, and a dash of personality in every reply.
-                    </Typography>
-                </Box>
-            </Fade>
-            <Fade in={!selectedPersona} timeout={600} unmountOnExit>
-                <Grid container spacing={4} justifyContent="center">
-                    {personas.map((persona, idx) => (
-                        <Grid item key={persona.id}>
-                            <Fade in={!selectedPersona} timeout={600 + idx * 200}>
-                                <div>
-                                    <PersonaCard
-                                        id={persona.id}
-                                        name={persona.name}
-                                        description={persona.description}
-                                        image={persona.image}
-                                        onChatClick={setSelectedPersona}
-                                    />
-                                </div>
-                            </Fade>
-                        </Grid>
-                    ))}
-                </Grid>
-            </Fade>
-            <Fade in={!!selectedPersona} timeout={600} unmountOnExit>
-                <Box>
-                    {selectedPersona && (
                         <ChatWindow
                             personaId={selectedPersona}
                             onClose={handleCloseChat}
+                            sx={{
+                                width: '100%',
+                                height: '100%',
+                                borderRadius: 4,
+                                overflow: 'hidden',
+                                position: 'relative',
+                                boxShadow: (theme) =>
+                                    theme.palette.mode === 'dark'
+                                        ? '0 4px 16px rgba(0,0,0,0.3)'
+                                        : '0 4px 16px rgba(0,0,0,0.1)',
+                            }}
                         />
-                    )}
-                </Box>
-            </Fade>
+                    </Box>
+                </Fade>
+            )}
         </Box>
     );
 };
