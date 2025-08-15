@@ -1,5 +1,7 @@
 # LLM Persona Chat
 
+Deployment url - https://persona-chat-bot-two.vercel.app/
+
 ## Overview
 LLM Persona Chat is a web application that utilizes large language models (LLMs) to create interactive chat experiences with two distinct personas: Hitesh Choudhary and Piyush Garg. The application captures the unique tones and styles of these personalities, allowing users to engage in conversations that reflect their communication styles.
 
