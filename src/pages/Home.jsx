@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { Box, Grid, Fade, Typography } from '@mui/material';
+import { Box, Grid, Fade, Typography, IconButton, Menu, MenuItem, ToggleButtonGroup, ToggleButton } from '@mui/material';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import TextFieldsIcon from '@mui/icons-material/TextFields';
 import PersonaCard from '../components/PersonaCard';
 import ChatWindow from '../components/ChatWindow';
 
@@ -20,11 +23,32 @@ const personas = [
     },
 ];
 
-const Home = ({ mode }) => {
-    const [selectedPersona, setSelectedPersona] = useState(null);
+const FONT_SIZES = {
+    small: 12,
+    medium: 16,
+    large: 24,
+};
 
-    const handleChatClick = (personaId) => setSelectedPersona(personaId);
+const Home = ({ mode, setMode }) => {
+    const [selectedPersona, setSelectedPersona] = useState(null);
+    const [fontSize, setFontSize] = useState('medium');
+    const [anchorEl, setAnchorEl] = useState(null);
+
     const handleCloseChat = () => setSelectedPersona(null);
+
+    // Theme toggle
+    const handleThemeToggle = () => setMode(mode === 'light' ? 'dark' : 'light');
+
+    // Font size menu
+    const handleFontMenuOpen = (event) => setAnchorEl(event.currentTarget);
+    const handleFontMenuClose = () => setAnchorEl(null);
+    const handleFontSizeChange = (event, newSize) => {
+        if (newSize) setFontSize(newSize);
+        handleFontMenuClose();
+    };
+
+    // Provide font size as a number for sx
+    const fontPx = FONT_SIZES[fontSize];
 
     return (
         <Box
@@ -43,9 +67,55 @@ const Home = ({ mode }) => {
                 overflowX: 'hidden',
             }}
         >
+            {/* Top bar with theme and font size controls */}
+            <Box
+                sx={{
+                    width: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    zIndex: 2000,
+                    px: 3,
+                    py: 2,
+                    background: 'transparent',
+                    gap: 2,
+                }}
+            >
+                <IconButton onClick={handleThemeToggle} color="inherit">
+                    {mode === 'light' ? <Brightness4Icon /> : <Brightness7Icon />}
+                </IconButton>
+                <IconButton onClick={handleFontMenuOpen} color="inherit">
+                    <TextFieldsIcon />
+                </IconButton>
+                <Menu
+                    anchorEl={anchorEl}
+                    open={Boolean(anchorEl)}
+                    onClose={handleFontMenuClose}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                    transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                >
+                    <ToggleButtonGroup
+                        value={fontSize}
+                        exclusive
+                        onChange={handleFontSizeChange}
+                        orientation="vertical"
+                        size="small"
+                        sx={{ mx: 1, my: 1 }}
+                    >
+                        <ToggleButton value="small">Small</ToggleButton>
+                        <ToggleButton value="medium">Medium</ToggleButton>
+                        <ToggleButton value="large">Large</ToggleButton>
+                    </ToggleButtonGroup>
+                </Menu>
+            </Box>
+
+            {/* Welcome and persona selection */}
             {!selectedPersona && (
                 <Fade in timeout={800}>
-                    <div style={{ marginBottom: 40, width: '100%', textAlign: 'center' }}>
+                    <div style={{ marginBottom: 40, width: '100%', textAlign: 'center', marginTop: 80 }}>
                         <Typography
                             variant="h3"
                             sx={{
@@ -60,10 +130,17 @@ const Home = ({ mode }) => {
                                 textShadow: (theme) =>
                                     theme.palette.mode === 'dark'
                                         ? '0 2px 8px #000'
-                                        : '0 2px 8px #bdbdbd',
+                                        : '0 2px 8px #fff, 0 4px 16px #bdbdbd', // Add a strong white shadow for light mode
+                                fontSize: fontPx + 10,
+                                background: (theme) =>
+                                    theme.palette.mode === 'light' ? 'rgba(255,255,255,0.7)' : 'transparent', // subtle background for light mode
+                                borderRadius: 2,
+                                px: 2,
+                                py: 1,
+                                display: 'inline-block',
                             }}
                         >
-                            👋 Welcome to Your AI Companion
+                            Welcome to Your AI Companion
                         </Typography>
                         <Typography
                             variant="h6"
@@ -75,6 +152,7 @@ const Home = ({ mode }) => {
                                 fontWeight: 500,
                                 fontFamily: 'Poppins, Montserrat, sans-serif',
                                 mb: 1,
+                                fontSize: fontPx,
                             }}
                         >
                             Select a persona to get insights, advice, and a dash of personality in every reply.
@@ -95,6 +173,7 @@ const Home = ({ mode }) => {
                                             description={persona.description}
                                             image={persona.image}
                                             onChatClick={setSelectedPersona}
+                                            fontSize={fontPx}
                                         />
                                     </div>
                                 </Fade>
@@ -129,17 +208,7 @@ const Home = ({ mode }) => {
                         <ChatWindow
                             personaId={selectedPersona}
                             onClose={handleCloseChat}
-                            sx={{
-                                width: '100%',
-                                height: '100%',
-                                borderRadius: 4,
-                                overflow: 'hidden',
-                                position: 'relative',
-                                boxShadow: (theme) =>
-                                    theme.palette.mode === 'dark'
-                                        ? '0 4px 16px rgba(0,0,0,0.3)'
-                                        : '0 4px 16px rgba(0,0,0,0.1)',
-                            }}
+                            fontSize={fontPx}
                         />
                     </Box>
                 </Fade>

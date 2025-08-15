@@ -16,7 +16,7 @@ const personaDetails = {
     },
 };
 
-const ChatWindow = ({ personaId, onClose }) => {
+const ChatWindow = ({ personaId, onClose, fontSize = 16 }) => {
     const [userInput, setUserInput] = useState('');
     const [chatHistory, setChatHistory] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -63,6 +63,7 @@ const ChatWindow = ({ personaId, onClose }) => {
                         ? 'linear-gradient(135deg, #232526 0%, #414345 100%)'
                         : '#ece5dd',
                 position: 'relative',
+                fontSize, // <--- This will set the base font size for all children
             }}
         >
             {/* Header */}
@@ -76,6 +77,7 @@ const ChatWindow = ({ personaId, onClose }) => {
                     borderTopLeftRadius: 12,
                     borderTopRightRadius: 12,
                     minHeight: 68,
+                    fontSize, // header font size
                 }}
             >
                 <Avatar
@@ -117,6 +119,7 @@ const ChatWindow = ({ personaId, onClose }) => {
                         theme.palette.mode === 'dark'
                             ? 'linear-gradient(135deg, #232526 0%, #0f2027 100%)'
                             : 'linear-gradient(135deg, #e0eafc 0%, #a1c4fd 100%)',
+                    fontSize, // chat area font size
                 }}
             >
                 {chatHistory.map((chat, index) => (
@@ -135,6 +138,7 @@ const ChatWindow = ({ personaId, onClose }) => {
                             borderRadius: 2,
                             maxWidth: '75%',
                             boxShadow: 1,
+                            fontSize, // message font size
                         }}
                     >
                         {chat.message}
@@ -170,7 +174,7 @@ const ChatWindow = ({ personaId, onClose }) => {
                     display: 'flex',
                     alignItems: 'center',
                     p: 2,
-                    background: '#f7f7f7',
+                    background: (theme) => theme.palette.mode === 'dark' ? '#2d3748' : '#f7f7f7',
                     borderBottomLeftRadius: 12,
                     borderBottomRightRadius: 12,
                 }}
@@ -187,15 +191,21 @@ const ChatWindow = ({ personaId, onClose }) => {
                     placeholder="Type a message"
                     disabled={loading}
                     sx={{
-                        background: '#fff',
+                        background: (theme) => theme.palette.mode === 'dark' ? '#232526' : '#fff',
                         borderRadius: 1,
+                        fontSize,
+                        color: (theme) => theme.palette.mode === 'dark' ? '#fff' : '#222', // <-- text color
                         '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
                         '& .MuiOutlinedInput-root': { padding: 0 },
+                        '& .MuiInputBase-input': {
+                            color: (theme) => theme.palette.mode === 'dark' ? '#fff' : '#222', // <-- input text color
+                        },
                         '& textarea': {
                             padding: '12px 14px',
-                            fontSize: 16,
+                            fontSize,
                             lineHeight: 1.5,
                             resize: 'none',
+                            color: (theme) => theme.palette.mode === 'dark' ? '#fff' : '#222', // <-- textarea text color
                         },
                     }}
                     InputProps={{
@@ -207,7 +217,16 @@ const ChatWindow = ({ personaId, onClose }) => {
                     color="primary"
                     onClick={handleSendMessage}
                     disabled={loading || !userInput.trim()}
-                    sx={{ ml: 2, minWidth: 80 }}
+                    sx={{
+                        ml: 2,
+                        minWidth: 80,
+                        fontSize,
+                        background: (theme) => theme.palette.mode === 'dark' ? '#075e54' : undefined,
+                        color: (theme) => theme.palette.mode === 'dark' ? '#fff' : undefined, // <-- button text color
+                        '&:hover': {
+                            background: (theme) => theme.palette.mode === 'dark' ? '#128c7e' : undefined,
+                        },
+                    }}
                 >
                     {loading ? '...' : 'Send'}
                 </Button>
