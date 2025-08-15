@@ -1,4 +1,4 @@
-# LLM Persona Chat
+# Persona Chat Bot
 
 Deployment url - https://persona-chat-bot-two.vercel.app/
 
