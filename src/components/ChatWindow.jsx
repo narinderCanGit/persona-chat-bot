@@ -146,7 +146,7 @@ const ChatWindow = ({ personaId, onClose, fontSize = 16 }) => {
                             fontSize,
                         }}
                     >
-                        {chat.message}
+                        {linkifyJSX(chat.message)}
                     </Box>
                 ))}
                 {loading && (
@@ -239,5 +239,31 @@ const ChatWindow = ({ personaId, onClose, fontSize = 16 }) => {
         </Box>
     );
 };
+
+/**
+ * Converts URLs in a given text string into clickable <a> links in JSX.
+ *
+ * Splits the input text by URLs and wraps each detected URL with an anchor tag,
+ * opening links in a new tab and applying custom styles.
+ */
+function linkifyJSX(text) {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const parts = text.split(urlRegex);
+    return parts.map((part, i) =>
+        urlRegex.test(part) ? (
+            <a
+                key={i}
+                href={part}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: '#3182ce', wordBreak: 'break-all' }}
+            >
+                {part}
+            </a>
+        ) : (
+            part
+        )
+    );
+}
 
 export default ChatWindow;
