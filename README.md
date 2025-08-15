@@ -32,7 +32,7 @@ llm-persona-chat
 │   │   └── Home.jsx
 │   ├── theme.js
 │   ├── App.jsx
-│   └── index.js
+│   └── main.jsx
 ├── server.js
 ├── package.json
 └── README.md
@@ -66,9 +66,9 @@ llm-persona-chat
    The backend will start on `http://localhost:8000`.
 
 5. **Run the Frontend**
-   In a new terminal, start the React development server:
+   In a new terminal, start the Vite development server:
    ```bash
-   npm start
+   npm run dev
    ```
    Open your browser and navigate to `http://localhost:3000`.
 
@@ -84,3 +84,6 @@ Contributions are welcome! Please feel free to submit a pull request or open an 
 ## Acknowledgments
 - Special thanks to Hitesh Choudhary and Piyush Garg for their inspiration and contributions to the tech community.
 - Powered by OpenAI's GPT models.
+
+## Notes
+- The frontend uses [Vite](https://vitejs.dev/) for fast development and builds.
