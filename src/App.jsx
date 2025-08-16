@@ -12,12 +12,12 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
+        <Box>
           <Routes>
             <Route path="/" element={<Home mode={mode} setMode={setMode} />} />
           </Routes>
           <Box sx={{ textAlign: 'center', py: 2, color: 'text.secondary', fontSize: 14 }}>
-            &copy; {new Date().getFullYear()} Narinder Kumar LLM Persona Chat. All rights reserved.
+            &copy; {new Date().getFullYear()} Narinder Kumar Persona Chat. All rights reserved.
           </Box>
         </Box>
       </Router>

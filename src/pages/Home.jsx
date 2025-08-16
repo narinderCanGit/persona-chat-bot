@@ -8,20 +8,27 @@ import ChatWindow from '../components/ChatWindow';
 
 // Persona data for selection cards
 const personas = [
+    // {
+    //     id: 'hitesh',
+    //     name: 'Hitesh Choudhary',
+    //     image: 'https://avatars.githubusercontent.com/u/11613311?v=4',
+    //     description:
+    //         'Educator, founder of Chai Aur Code, passionate about simplifying tech for everyone.',
+    // },
     {
-        id: 'hitesh',
-        name: 'Hitesh Choudhary',
-        image: 'https://avatars.githubusercontent.com/u/11613311?v=4',
+        id: 'narinder',
+        name: 'Narinder Kumar',
+        image: 'https://avatars.githubusercontent.com/narinderCanGit',
         description:
-            'Educator, founder of Chai Aur Code, passionate about simplifying tech for everyone.',
+            'JavaScript FullStack Developer, and passionate educator. Part-time cricketer and traveller who spends weekends on the field or in the mountains.',
     },
-    {
-        id: 'piyush',
-        name: 'Piyush Garg',
-        image: 'https://avatars.githubusercontent.com/u/44976328?v=4',
-        description:
-            'Software engineer and educator, known for analytical and structured teaching.',
-    },
+    // {
+    //     id: 'piyush',
+    //     name: 'Piyush Garg',
+    //     image: 'https://avatars.githubusercontent.com/u/44976328?v=4',
+    //     description:
+    //         'Software engineer and educator, known for analytical and structured teaching.',
+    // }
 ];
 
 // Font size options for the app
@@ -142,10 +149,11 @@ const Home = ({ mode, setMode }) => {
                                 display: 'inline-block',
                             }}
                         >
-                            Welcome to Your AI Companion
+                            {/* Welcome to Your AI Companion */}
+                            Chat with My Personal Persona
                         </Typography>
                         <Typography
-                            variant="h6"
+                            variant="h5"
                             sx={{
                                 color: (theme) =>
                                     theme.palette.mode === 'dark'
@@ -154,10 +162,11 @@ const Home = ({ mode, setMode }) => {
                                 fontWeight: 500,
                                 fontFamily: 'Poppins, Montserrat, sans-serif',
                                 mb: 1,
-                                fontSize: fontPx,
+                                fontSize: fontPx + 5,
                             }}
                         >
-                            Select a persona to get insights, advice, and a dash of personality in every reply.
+                            {/* Select a persona to get insights, advice, and a dash of personality in every reply. */}
+                            A single, trusted guide for coding help, learning paths, and hands-on advice — chat whenever you need.
                         </Typography>
                     </div>
                 </Fade>

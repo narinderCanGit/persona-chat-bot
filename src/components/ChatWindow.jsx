@@ -11,10 +11,14 @@ const personaDetails = {
         name: 'Hitesh Choudhary',
         image: 'https://avatars.githubusercontent.com/u/11613311?v=4',
     },
+     narinder: {
+        name: 'Narinder Kumar',
+        image: 'https://avatars.githubusercontent.com/narinderCanGit',
+    },
     piyush: {
         name: 'Piyush Garg',
         image: 'https://avatars.githubusercontent.com/u/44976328?v=4',
-    },
+    }
 };
 
 const ChatWindow = ({ personaId, onClose, fontSize = 16 }) => {
@@ -33,6 +37,7 @@ const ChatWindow = ({ personaId, onClose, fontSize = 16 }) => {
 
     // Send user message and get AI reply
     const handleSendMessage = async () => {
+        console.log('zzz');
         if (!userInput.trim()) return;
         const newHistory = [...chatHistory, { sender: 'user', message: userInput }];
         setChatHistory(newHistory);
@@ -68,7 +73,7 @@ const ChatWindow = ({ personaId, onClose, fontSize = 16 }) => {
                         ? 'linear-gradient(135deg, #232526 0%, #414345 100%)'
                         : '#ece5dd',
                 position: 'relative',
-                fontSize, // base font size for children
+                fontSize,
             }}
         >
             {/* Header with persona info */}
