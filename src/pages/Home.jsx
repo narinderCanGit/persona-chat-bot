@@ -5,6 +5,7 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 import PersonaCard from '../components/PersonaCard';
 import ChatWindow from '../components/ChatWindow';
+import profilePic from '../assets/profile-pic.jpeg';
 
 // Persona data for selection cards
 const personas = [
@@ -18,7 +19,7 @@ const personas = [
     {
         id: 'narinder',
         name: 'Narinder Kumar',
-        image: 'https://avatars.githubusercontent.com/narinderCanGit',
+        image: profilePic,
         description:
             'JavaScript FullStack Developer, and passionate educator. Part-time cricketer and traveller who spends weekends on the field or in the mountains.',
     },

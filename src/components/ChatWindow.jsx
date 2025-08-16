@@ -4,6 +4,7 @@ import { TextField, Button, Typography, Box, Avatar, IconButton } from '@mui/mat
 import CloseIcon from '@mui/icons-material/Close';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import TypingIndicator from './TypingIndicator';
+import profilePic from '../assets/profile-pic.jpeg';
 
 // Persona details for chat header
 const personaDetails = {
@@ -13,7 +14,7 @@ const personaDetails = {
     },
      narinder: {
         name: 'Narinder Kumar',
-        image: 'https://avatars.githubusercontent.com/narinderCanGit',
+        image: profilePic,
     },
     piyush: {
         name: 'Piyush Garg',
